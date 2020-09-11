@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxdelta.schoolmarket.mapper.SmUserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sxdelta.schoolmarket.model.SmUserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_source" jdbcType="INTEGER" property="userSource" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_phonenumber" jdbcType="VARCHAR" property="userPhonenumber" />
+    <result column="user_wxunionID" jdbcType="VARCHAR" property="userWxunionid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="user_icon" jdbcType="VARCHAR" property="userIcon" />
+    <result column="user_signature" jdbcType="VARCHAR" property="userSignature" />
+    <result column="user_gender" jdbcType="INTEGER" property="userGender" />
+    <result column="user_birthday" jdbcType="TIMESTAMP" property="userBirthday" />
+    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_source, user_id, user_phonenumber, user_wxunionID, username, user_icon, 
+    user_signature, user_gender, user_birthday, user_type, status, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.sxdelta.schoolmarket.model.SmUserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sm_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sm_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sm_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sxdelta.schoolmarket.model.SmUserInfoExample">
+    delete from sm_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sxdelta.schoolmarket.model.SmUserInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sm_user_info (user_source, user_id, user_phonenumber, 
+      user_wxunionID, username, user_icon, 
+      user_signature, user_gender, user_birthday, 
+      user_type, status, create_time, 
+      update_time)
+    values (#{userSource,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{userPhonenumber,jdbcType=VARCHAR}, 
+      #{userWxunionid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userIcon,jdbcType=VARCHAR}, 
+      #{userSignature,jdbcType=VARCHAR}, #{userGender,jdbcType=INTEGER}, #{userBirthday,jdbcType=TIMESTAMP}, 
+      #{userType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxdelta.schoolmarket.model.SmUserInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sm_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userSource != null">
+        user_source,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userPhonenumber != null">
+        user_phonenumber,
+      </if>
+      <if test="userWxunionid != null">
+        user_wxunionID,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="userIcon != null">
+        user_icon,
+      </if>
+      <if test="userSignature != null">
+        user_signature,
+      </if>
+      <if test="userGender != null">
+        user_gender,
+      </if>
+      <if test="userBirthday != null">
+        user_birthday,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userSource != null">
+        #{userSource,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhonenumber != null">
+        #{userPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userWxunionid != null">
+        #{userWxunionid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userIcon != null">
+        #{userIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="userSignature != null">
+        #{userSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null">
+        #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthday != null">
+        #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sxdelta.schoolmarket.model.SmUserInfoExample" resultType="java.lang.Long">
+    select count(*) from sm_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sm_user_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userSource != null">
+        user_source = #{record.userSource,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhonenumber != null">
+        user_phonenumber = #{record.userPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userWxunionid != null">
+        user_wxunionID = #{record.userWxunionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIcon != null">
+        user_icon = #{record.userIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSignature != null">
+        user_signature = #{record.userSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGender != null">
+        user_gender = #{record.userGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.userBirthday != null">
+        user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userType != null">
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sm_user_info
+    set id = #{record.id,jdbcType=BIGINT},
+      user_source = #{record.userSource,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_phonenumber = #{record.userPhonenumber,jdbcType=VARCHAR},
+      user_wxunionID = #{record.userWxunionid,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      user_icon = #{record.userIcon,jdbcType=VARCHAR},
+      user_signature = #{record.userSignature,jdbcType=VARCHAR},
+      user_gender = #{record.userGender,jdbcType=INTEGER},
+      user_birthday = #{record.userBirthday,jdbcType=TIMESTAMP},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxdelta.schoolmarket.model.SmUserInfo">
+    update sm_user_info
+    <set>
+      <if test="userSource != null">
+        user_source = #{userSource,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhonenumber != null">
+        user_phonenumber = #{userPhonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userWxunionid != null">
+        user_wxunionID = #{userWxunionid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userIcon != null">
+        user_icon = #{userIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="userSignature != null">
+        user_signature = #{userSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null">
+        user_gender = #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirthday != null">
+        user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxdelta.schoolmarket.model.SmUserInfo">
+    update sm_user_info
+    set user_source = #{userSource,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_phonenumber = #{userPhonenumber,jdbcType=VARCHAR},
+      user_wxunionID = #{userWxunionid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      user_icon = #{userIcon,jdbcType=VARCHAR},
+      user_signature = #{userSignature,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=INTEGER},
+      user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
+      user_type = #{userType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sm_user_info
+    where user_id = #{user_id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPhoneNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sm_user_info
+    where user_phonenumber = #{phoneNum,jdbcType=VARCHAR}
+  </select>
+
+  <select id="countByUnionID" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from sm_user_info
+    where user_wxunionID = #{unionID, jdbcType=VARCHAR}
+  </select>
+
+  <select id="countByPhonenumber" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from sm_user_info
+    where user_phonenumber = #{phonenumber, jdbcType=VARCHAR}
+  </select>
+</mapper>

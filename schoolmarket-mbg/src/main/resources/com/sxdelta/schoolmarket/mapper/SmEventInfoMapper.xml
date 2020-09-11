@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxdelta.schoolmarket.mapper.SmEventInfoMapper">
+  <resultMap id="BaseResultMap" type="com.sxdelta.schoolmarket.model.SmEventInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="event_id" jdbcType="VARCHAR" property="eventId" />
+    <result column="event_content" jdbcType="VARCHAR" property="eventContent" />
+    <result column="event_picture" jdbcType="VARCHAR" property="eventPicture" />
+    <result column="event_topic" jdbcType="VARCHAR" property="eventTopic" />
+    <result column="event_school" jdbcType="VARCHAR" property="eventSchool" />
+    <result column="event_viewpermission" jdbcType="INTEGER" property="eventViewpermission" />
+    <result column="event_commentspermission" jdbcType="INTEGER" property="eventCommentspermission" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="start_num" jdbcType="INTEGER" property="startNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, event_id, event_content, event_picture, event_topic, event_school, event_viewpermission, 
+    event_commentspermission, create_time, update_time, start_num, collect_num, comment_num
+  </sql>
+  <select id="selectByExample" parameterType="com.sxdelta.schoolmarket.model.SmEventInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sm_event_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sm_event_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sm_event_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sxdelta.schoolmarket.model.SmEventInfoExample">
+    delete from sm_event_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sxdelta.schoolmarket.model.SmEventInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sm_event_info (user_id, event_id, event_content, 
+      event_picture, event_topic, event_school, 
+      event_viewpermission, event_commentspermission, 
+      create_time, update_time, start_num, 
+      collect_num, comment_num)
+    values (#{userId,jdbcType=VARCHAR}, #{eventId,jdbcType=VARCHAR}, #{eventContent,jdbcType=VARCHAR}, 
+      #{eventPicture,jdbcType=VARCHAR}, #{eventTopic,jdbcType=VARCHAR}, #{eventSchool,jdbcType=VARCHAR}, 
+      #{eventViewpermission,jdbcType=INTEGER}, #{eventCommentspermission,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{startNum,jdbcType=INTEGER}, 
+      #{collectNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxdelta.schoolmarket.model.SmEventInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sm_event_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="eventId != null">
+        event_id,
+      </if>
+      <if test="eventContent != null">
+        event_content,
+      </if>
+      <if test="eventPicture != null">
+        event_picture,
+      </if>
+      <if test="eventTopic != null">
+        event_topic,
+      </if>
+      <if test="eventSchool != null">
+        event_school,
+      </if>
+      <if test="eventViewpermission != null">
+        event_viewpermission,
+      </if>
+      <if test="eventCommentspermission != null">
+        event_commentspermission,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="startNum != null">
+        start_num,
+      </if>
+      <if test="collectNum != null">
+        collect_num,
+      </if>
+      <if test="commentNum != null">
+        comment_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventId != null">
+        #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventContent != null">
+        #{eventContent,jdbcType=VARCHAR},
+      </if>
+      <if test="eventPicture != null">
+        #{eventPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTopic != null">
+        #{eventTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="eventSchool != null">
+        #{eventSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="eventViewpermission != null">
+        #{eventViewpermission,jdbcType=INTEGER},
+      </if>
+      <if test="eventCommentspermission != null">
+        #{eventCommentspermission,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startNum != null">
+        #{startNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null">
+        #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sxdelta.schoolmarket.model.SmEventInfoExample" resultType="java.lang.Long">
+    select count(*) from sm_event_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sm_event_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventId != null">
+        event_id = #{record.eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventContent != null">
+        event_content = #{record.eventContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventPicture != null">
+        event_picture = #{record.eventPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventTopic != null">
+        event_topic = #{record.eventTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventSchool != null">
+        event_school = #{record.eventSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventViewpermission != null">
+        event_viewpermission = #{record.eventViewpermission,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventCommentspermission != null">
+        event_commentspermission = #{record.eventCommentspermission,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startNum != null">
+        start_num = #{record.startNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectNum != null">
+        collect_num = #{record.collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentNum != null">
+        comment_num = #{record.commentNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sm_event_info
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      event_id = #{record.eventId,jdbcType=VARCHAR},
+      event_content = #{record.eventContent,jdbcType=VARCHAR},
+      event_picture = #{record.eventPicture,jdbcType=VARCHAR},
+      event_topic = #{record.eventTopic,jdbcType=VARCHAR},
+      event_school = #{record.eventSchool,jdbcType=VARCHAR},
+      event_viewpermission = #{record.eventViewpermission,jdbcType=INTEGER},
+      event_commentspermission = #{record.eventCommentspermission,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      start_num = #{record.startNum,jdbcType=INTEGER},
+      collect_num = #{record.collectNum,jdbcType=INTEGER},
+      comment_num = #{record.commentNum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxdelta.schoolmarket.model.SmEventInfo">
+    update sm_event_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventId != null">
+        event_id = #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventContent != null">
+        event_content = #{eventContent,jdbcType=VARCHAR},
+      </if>
+      <if test="eventPicture != null">
+        event_picture = #{eventPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTopic != null">
+        event_topic = #{eventTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="eventSchool != null">
+        event_school = #{eventSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="eventViewpermission != null">
+        event_viewpermission = #{eventViewpermission,jdbcType=INTEGER},
+      </if>
+      <if test="eventCommentspermission != null">
+        event_commentspermission = #{eventCommentspermission,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startNum != null">
+        start_num = #{startNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null">
+        collect_num = #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        comment_num = #{commentNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxdelta.schoolmarket.model.SmEventInfo">
+    update sm_event_info
+    set user_id = #{userId,jdbcType=VARCHAR},
+      event_id = #{eventId,jdbcType=VARCHAR},
+      event_content = #{eventContent,jdbcType=VARCHAR},
+      event_picture = #{eventPicture,jdbcType=VARCHAR},
+      event_topic = #{eventTopic,jdbcType=VARCHAR},
+      event_school = #{eventSchool,jdbcType=VARCHAR},
+      event_viewpermission = #{eventViewpermission,jdbcType=INTEGER},
+      event_commentspermission = #{eventCommentspermission,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      start_num = #{startNum,jdbcType=INTEGER},
+      collect_num = #{collectNum,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

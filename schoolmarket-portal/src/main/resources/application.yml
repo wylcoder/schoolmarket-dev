@@ -1,0 +1,135 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/schoolmarket?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: admin
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      database: mall-port
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com # oss对外服务的访问域名
+    accessKeyId: LTAI4GJ6JfW1i8PjVdFjrKYy # 访问身份验证中用到用户标识
+    accessKeySecret: 4HV2E7OvGY6gbTRqcQCMe918DSeUQ2 # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucketName: congtouschoolmarket # oss的存储空间
+    policy:
+      expire: 300 # 签名有效期(S)
+    maxSize: 10 # 上传文件大小(M)
+    callback: http://39.98.190.128:8080/aliyun/oss/callback # 文件上传成功后的回调地址
+    dir:
+      prefixheadicon: schoolmarket/userIcon/ # 上传文件夹路径前缀
+      prefixgoodspic: schoolmarket/goodsPic/
+      prefixeventpic: schoolmarket/eventPic/
+  redis:
+    host: localhost # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
+    timeout: 300ms # 连接超时时间（毫秒）
+
+alipay:
+  #支付宝支付相关配置
+
+  #支付宝分配给开发者的应用Id
+  aliPayAppId: 2016092600598885
+
+  #卖家支付宝用户号（对应异步通知返回参数seller_id）（可以不配置，只是异步通知时为了进一步校验而配置）
+  aliPaySellerId: 2088102177316576
+
+  #卖家支付宝账号（对应异步通知返回参数seller_email）（可以不配置，只是异步通知时为了进一步校验而配置）
+  alipayAccount: myemqy5975@sandbox.com
+
+  #商户应用公钥
+  rsaPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgv9dTQb3lT5M/wwKgxXI9fH3yX3HsYlvjf1OBrGagp8uFiPAsCLi0WxY/COwDnNc5DWE25JNYGwtbfOcySjSjT0ITGk23DpXXRs6cc+vaV++ui8VuVVEgvjGfRaRVL3/w2qOpytRJhAshKAaKHObY+T8LxG9bMBjPg3N66WGtMI+wEiIXhL7yLL6Zh/9YcSULk8oQT3d+BW67cy3OFvfAd0e/ZBDeMfdx+ilKwh+a7a9GQzpy7dzJDEhlWP44VQVSSV3iFnRUYoObP/IThFRFVB9SQRagqy4iFU8xQoQn4mMpDjC+t/rwcIQxt4hev144xQx/o/xe6Np85Fsk2JZKQIDAQAB
+
+  #商户应用私钥（注意，如果是Java语言，需要使用pkcs8格式的私钥，避免出现不可预知的错误）
+  rsaPrivatKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCC/11NBveVPkz/DAqDFcj18ffJfcexiW+N/U4GsZqCny4WI8CwIuLRbFj8I7AOc1zkNYTbkk1gbC1t85zJKNKNPQhMaTbcOlddGzpxz69pX766LxW5VUSC+MZ9FpFUvf/Dao6nK1EmECyEoBooc5tj5PwvEb1swGM+Dc3rpYa0wj7ASIheEvvIsvpmH/1hxJQuTyhBPd34FbrtzLc4W98B3R79kEN4x93H6KUrCH5rtr0ZDOnLt3MkMSGVY/jhVBVJJXeIWdFRig5s/8hOEVEVUH1JBFqCrLiIVTzFChCfiYykOML63+vBwhDG3iF6/XjjFDH+j/F7o2nzkWyTYlkpAgMBAAECggEADlZu2tBpZr9T5BJoUCKhRTH/oeEPa0IUoKDZ2mez9pn/jFLLczvOQYevUaGCUoKT5zJoYTPpHiWY71DblzTNnsHQV7SoWYBVMY6aXfySQWFGWdBve0J25jLeXrCKpZDKHpRaGrfmANmCVd3EHytQFaXpaClz5yRDeHZAVItgbAYxkgDwtDuSh+9v1Y7dTDC3/1tqF6VVhv55Lj6RzGMU0Zzg+HYooQ2/F8GffVZC254D/07XYa7qq0kjPlbWvyqvvW9JQIu8gOSOrsh++0HZyFSn48ZarHk9toy4DsHrdXXWfku92sngONN/oF4DUiSVaHWhS+M+w4HsDx0Gscf30QKBgQDkPIXKUMO+nZzFU309UnWkQyrW/KFw6tppylDdkTChZdemzqoGzsycyJIikQGAdwzChoGE6jRhce2Iwc7MsmTBGiBKfHbdy3TsTnNtgUVEqSvZLYktBBbCyv3RnP3JZ0dfd1o4dAlLuIpx42tIPdhWYodkB+i21rNsajxHk++bHQKBgQCS7r1BtDgMnNR5xmn5O3SeVHJRhAQP0bzKtO1OJQy4CPTIHYOWl/sI1w4EJ9SFL+myt9h+hdnaaABW2wDPCKkPTH+sUh+oO31TZOveLnMAiAld0c8+8+ZciFPK0pu96LthGTtUApVHCYxnChPRoaZYrVa+a41nA9jFpUY7tANMfQKBgQC/OxKibD9GNAsJrqVtvuyAwCJh1XRzBuQP5YsRyjfj00/4HIqLf7Qi3U7MFZEbkSQozMgylIVk7C8o+bILAqG2xewuXNC/j1wdLrI6GyjtmYz6v9OC2z0y4x/+BDsECDvd+kOmr1qmji25tOHLur3Ly2xDXPkYURYujWiKVKJa5QKBgEblVwBK+vhq+8K+UAfn/j8fNAHNF0CizNtqLU6VZeuutp2QUBvrvT7otWSf61VQZwzK1HVIFHPj1rYR+fPrk9dD7B6ziX7dJX2FpqGP/AF3oj1YrQ0NFkvzo6qrsGYT08XoLM4+aNTb8JkPLbzqqJ8FFGPQ9WuNWZ0UQC0ykJzpAoGBAJ6n6Z5QgU8m3vzZ4Yk8H4yrepnYAMjRkyMyiH8kM8kga9L5QJ7SH3jYgJND30LaTeR9f/gGMLjEOZaHYbZ7ihv0MyJZQUrTipOPeLuxn1UWV3DaBcX65yL/B7zGUaYzSpu2eQikJjDw+kzqay7LBnT5GGoEjmWtMnW+4h+G8PPs
+
+  #支付宝公钥
+  rsaAlipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlLvMNKBzoP5aiMFa+wmw6zNKPQGuRbEfXBOCxW3IVKboKI6bI4BXH36QTskEYHZx9gbbP9sjU4el/8STPEcKm8y4+mPMeXXJki5EXnPK5vMiWxJK/AYMiMd6MpyYkRUx6a6DuOlKaYc0KrYu2KJK7CaE/oT8SoUKToEGzwRExcLm49rbyO67bpV7eQlQ9DjGJkt+0x5kY7GY+y27Yr5AEfzu5tJMZXGAaqMtBHG7Ut6Qh/PZ7kPlwvsqboFk3qjtgpYyD4mjoMfRVCCvrVpTHuCSjagQu3F+R5e/5wswS3oQsGKPBp+Kq6iptLY9kZ3LuftZdD0BZNuKkE9DHBsnFQIDAQAB
+
+  #加密方式
+  signType: RSA2
+
+  #仅支持JSON
+  alipayFormat: json
+
+  #请求使用的编码格式，如utf-8,gbk,gb2312等
+  alipayCharset: utf-8
+
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    virtual-host: /mall
+#    username: mall
+#    password: mall
+#    publisher-confirms: true #如果对异步消息需要回调必须设置为true
+
+# 日志配置
+logging:
+  level:
+    org.springframework.data.mongodb.core: debug
+    com.sxdelta.schoolmarket.mapper: debug
+    com.sxdelta.schoolmarket.portal.dao: debug
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: sxdelta-portal-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /druid/**
+      - /actuator/**
+      - /sso/**
+      - /home/**
+      - /product/**
+      - /brand/**
+
+# 自定义redis key
+redis:
+  database: schoolmarket
+  key:
+    authCode: "portal:authCode"
+    member: "portal:member"
+  expire:
+    authCode: 120 # 验证码超期时间
+    common: 86400 #2小时
+
+## 消息队列定义
+#rabbitmq:
+#  queue:
+#    name:
+#      cancelOrder: cancelOrderQueue
+
+

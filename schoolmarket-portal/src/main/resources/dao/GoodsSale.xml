@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxdelta.schoolmarket.portal.dao.GoodsSaleDao">
+    <resultMap id="goodsSale" type="com.sxdelta.schoolmarket.portal.domain.GoodsSale">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="goods_id" jdbcType="VARCHAR" property="goodsId" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="picture" jdbcType="VARCHAR" property="picture" />
+        <result column="address_id" jdbcType="VARCHAR" property="addressId" />
+        <result column="address_school" jdbcType="VARCHAR" property="addressSchool" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="delivery_type" jdbcType="INTEGER" property="deliveryType" />
+        <result column="pay_type" jdbcType="INTEGER" property="payType" />
+        <result column="old_degree" jdbcType="INTEGER" property="oldDegree" />
+        <result column="category" jdbcType="VARCHAR" property="category" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="first_price" jdbcType="DECIMAL" property="firstPrice" />
+        <result column="first_date" jdbcType="DATE" property="firstDate" />
+        <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+        <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+        <result column="star_num" jdbcType="INTEGER" property="starNum" />
+    </resultMap>
+
+    <select id="getGoodsBySchoolAndCondition" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+            sm_goods_sale
+        where
+            address_school = #{school}
+        order by #{condition} desc
+    </select>
+</mapper>

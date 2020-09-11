@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxdelta.schoolmarket.mapper.SmUserAddressMapper">
+  <resultMap id="BaseResultMap" type="com.sxdelta.schoolmarket.model.SmUserAddress">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="address_id" jdbcType="VARCHAR" property="addressId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="address_position_longitude" jdbcType="DECIMAL" property="addressPositionLongitude" />
+    <result column="address_position_latitude" jdbcType="DECIMAL" property="addressPositionLatitude" />
+    <result column="address_content" jdbcType="VARCHAR" property="addressContent" />
+    <result column="address_detail" jdbcType="VARCHAR" property="addressDetail" />
+    <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, address_id, user_name, address_position_longitude, address_position_latitude, 
+    address_content, address_detail, phonenumber, status, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.sxdelta.schoolmarket.model.SmUserAddressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sm_user_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sm_user_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sm_user_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sxdelta.schoolmarket.model.SmUserAddressExample">
+    delete from sm_user_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sxdelta.schoolmarket.model.SmUserAddress">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sm_user_address (user_id, address_id, user_name, 
+      address_position_longitude, address_position_latitude, 
+      address_content, address_detail, phonenumber, 
+      status, create_time, update_time
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{addressId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{addressPositionLongitude,jdbcType=DECIMAL}, #{addressPositionLatitude,jdbcType=DECIMAL}, 
+      #{addressContent,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxdelta.schoolmarket.model.SmUserAddress">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sm_user_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="addressId != null">
+        address_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="addressPositionLongitude != null">
+        address_position_longitude,
+      </if>
+      <if test="addressPositionLatitude != null">
+        address_position_latitude,
+      </if>
+      <if test="addressContent != null">
+        address_content,
+      </if>
+      <if test="addressDetail != null">
+        address_detail,
+      </if>
+      <if test="phonenumber != null">
+        phonenumber,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null">
+        #{addressId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressPositionLongitude != null">
+        #{addressPositionLongitude,jdbcType=DECIMAL},
+      </if>
+      <if test="addressPositionLatitude != null">
+        #{addressPositionLatitude,jdbcType=DECIMAL},
+      </if>
+      <if test="addressContent != null">
+        #{addressContent,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null">
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sxdelta.schoolmarket.model.SmUserAddressExample" resultType="java.lang.Long">
+    select count(*) from sm_user_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sm_user_address
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressId != null">
+        address_id = #{record.addressId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressPositionLongitude != null">
+        address_position_longitude = #{record.addressPositionLongitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addressPositionLatitude != null">
+        address_position_latitude = #{record.addressPositionLatitude,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addressContent != null">
+        address_content = #{record.addressContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressDetail != null">
+        address_detail = #{record.addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenumber != null">
+        phonenumber = #{record.phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sm_user_address
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      address_id = #{record.addressId,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      address_position_longitude = #{record.addressPositionLongitude,jdbcType=DECIMAL},
+      address_position_latitude = #{record.addressPositionLatitude,jdbcType=DECIMAL},
+      address_content = #{record.addressContent,jdbcType=VARCHAR},
+      address_detail = #{record.addressDetail,jdbcType=VARCHAR},
+      phonenumber = #{record.phonenumber,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxdelta.schoolmarket.model.SmUserAddress">
+    update sm_user_address
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null">
+        address_id = #{addressId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressPositionLongitude != null">
+        address_position_longitude = #{addressPositionLongitude,jdbcType=DECIMAL},
+      </if>
+      <if test="addressPositionLatitude != null">
+        address_position_latitude = #{addressPositionLatitude,jdbcType=DECIMAL},
+      </if>
+      <if test="addressContent != null">
+        address_content = #{addressContent,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null">
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        phonenumber = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxdelta.schoolmarket.model.SmUserAddress">
+    update sm_user_address
+    set user_id = #{userId,jdbcType=VARCHAR},
+      address_id = #{addressId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      address_position_longitude = #{addressPositionLongitude,jdbcType=DECIMAL},
+      address_position_latitude = #{addressPositionLatitude,jdbcType=DECIMAL},
+      address_content = #{addressContent,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      phonenumber = #{phonenumber,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
